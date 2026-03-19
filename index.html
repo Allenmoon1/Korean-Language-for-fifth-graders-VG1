@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Корейский язык для пятых классов</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+body{
+  font-family: 'Nunito', sans-serif;
+  background:#fdf5e6;
+  color:#333;
+  margin:0;
+  padding:0;
+  scroll-behavior: smooth;
+}
+.container{
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+h1{color:#5a3e1b;text-align:center;margin-bottom:20px;}
+h2{
+  margin-top:40px;
+  color:#a67c52;
+  border-bottom:2px solid #e8d8c3;
+  padding-bottom:5px;
+  scroll-margin-top: 80px;
+}
+/* навигация по разделам */
+.nav-menu{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 30px 0;
+  padding: 15px;
+  background: #fff8f0;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 10px;
+  z-index: 10;
+}
+.nav-btn{
+  padding: 10px 20px;
+  background: #a67c52;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  font-size: 15px;
+}
+.nav-btn:hover{
+  background: #8f6542;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(166,124,82,0.3);
+}
+
+/* это внешний вид алфавита */
+.alphabet-section{
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+  margin: 30px 0;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+}
+.alphabet-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+.alphabet-category {
+  margin-top: 30px;
+}
+.alphabet-category h3 {
+  color: #6b4226;
+  margin-bottom: 15px;
+}
+.letter-card{
+  background: #f8eee0;
+  padding: 15px 10px;
+  border-radius: 12px;
+  text-align: center;
+  transition: transform 0.3s;
+  cursor: pointer;
+}
+.letter-card:hover{
+  transform: scale(1.05);
+  background: #f4e4ce;
+}
+.korean-letter{
+  font-size: 32px;
+  font-weight: bold;
+  color: #6b4226;
+  margin-bottom: 8px;
+}
+.letter-transcription{
+  font-size: 14px;
+  color: #a67c52;
+  font-weight: 600;
+}
+.letter-name{
+  font-size: 12px;
+  color: #999;
+  margin-top: 3px;
+}
+
+/* это внешний вид раздела с фразами */
+.phrase{
+  margin-bottom:12px;
+  padding:12px;
+  background:#fff8f0;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.phrase:hover{
+  transform: translateY(-2px);
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+.korean{font-weight:600;font-size:18px;color:#6b4226;}
+.russian{font-size:16px;margin-top:4px;color:#5a3e1b;}
+.btn{
+  cursor:pointer;
+  padding:6px 10px;
+  border:none;
+  border-radius:8px;
+  background:#a67c52;
+  color:#fff;
+  font-weight:600;
+  transition: all 0.2s;
+  min-width: 40px;
+}
+.btn:hover{background:#8f6542; transform: scale(1.05);}
+
+/* а это внешний вид раздела с практикой */
+.practice{
+  margin-top:50px;
+  padding:25px;
+  background:#f8eee0;
+  border-radius:16px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.06);
+  transition: transform 0.3s;
+}
+.practice:hover{
+  transform: translateY(-5px);
+}
+.practice h3{color:#a67c52; margin-top: 0;}
+.practice select, .practice button{
+  padding:10px 15px;
+  border-radius:10px;
+  border:1px solid #e8d8c3;
+  margin-right:10px;
+  font-size:15px;
+  transition: all 0.3s;
+}
+.practice select:focus, .practice button:focus{
+  outline: none;
+  border-color: #a67c52;
+}
+#korPhrase{
+  font-size:20px;
+  font-weight:600;
+  margin:20px 0;
+  color:#6b4226;
+  background:#fff8f0;
+  padding:15px;
+  border-radius:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  cursor:pointer;
+  transition: background 0.3s;
+}
+#korPhrase:hover{
+  background: #f8e9d8;
+}
+#userAnswer{
+  flex:1;
+  padding:12px 18px;
+  border-radius:12px;
+  border:2px solid #e8d8c3;
+  font-size:16px;
+  outline:none;
+  transition: all 0.3s;
+  background:#fff8f0;
+  color:#333;
+}
+#userAnswer:focus{
+  border-color:#a67c52;
+  box-shadow:0 0 10px rgba(166,124,82,0.5);
+}
+.feedback{
+  margin-top:15px;
+  padding:15px;
+  background:#fff4e6;
+  border-radius:10px;
+  color:#6b4226;
+  line-height:1.5;
+  white-space:pre-line;
+  transition: opacity 0.5s;
+}
+.progress-container{
+  width:100%;
+  margin-top:20px;
+}
+.progress-bar{
+  width: 100%;
+  background:#e8d8c3;
+  border-radius:12px;
+  height:18px;
+  overflow: hidden;
+}
+.progress{
+  height:100%;
+  width:0%;
+  background:#a67c52;
+  border-radius:12px;
+  transition: width 0.5s ease;
+}
+
+/* небольшие плавные анимации в прокруте */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.section{
+  animation: fadeIn 0.8s ease-out;
+}
+
+/* внешний вид кнопки для скролла */
+#scrollToTop{
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #a67c52;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.3s;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+#scrollToTop.show{
+  opacity: 1;
+}
+#scrollToTop:hover{
+  background: #8f6542;
+  transform: scale(1.1);
+}
+
+/* тут уже начинаются сами категории */
+.category-section {
+  margin-top: 50px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1> Корейский язык для пятых классов </h1>
+
+  <!-- раздел навигации -->
+  <div class="nav-menu">
+    <a href="#alphabet" class="nav-btn">Алфавит</a>
+    <a href="#reading-words" class="nav-btn">Отработка чтения</a>
+    <a href="#family" class="nav-btn">Семья</a>
+    <a href="#endings" class="nav-btn">Окончания</a>
+    <a href="#my-family-text" class="nav-btn">Текст</a>
+    <a href="#school-items" class="nav-btn">Школа</a>
+    <a href="#weekdays" class="nav-btn">Дни недели</a>
+    <a href="#numbers-korean" class="nav-btn">Счет</a>
+    <a href="#months" class="nav-btn">Месяцы</a>
+    <a href="#month-days" class="nav-btn">Числа месяца</a>
+    <a href="#practice" class="nav-btn">Практика</a>
+  </div>
+
+  <!-- раздел алфавита -->
+  <div id="alphabet" class="section alphabet-section">
+    <h2>Корейский алфавит (Хангыль)</h2>
+    
+    <div class="alphabet-category">
+      <h3>Основные согласные (자음)</h3>
+      <div class="alphabet-grid" id="consonantsGrid"></div>
+    </div>
+    
+    <div class="alphabet-category">
+      <h3>Двойные согласные (쌍자음)</h3>
+      <div class="alphabet-grid" id="doubleConsonantsGrid"></div>
+    </div>
+    
+    <div class="alphabet-category">
+      <h3>Основные гласные (모음)</h3>
+      <div class="alphabet-grid" id="vowelsGrid"></div>
+    </div>
+    
+    <div class="alphabet-category">
+      <h3>Составные гласные (이중모음)</h3>
+      <div class="alphabet-grid" id="compoundVowelsGrid"></div>
+    </div>
+  </div>
+<!-- 2. СЛОВА НА ОТРАБОТКУ ЧТЕНИЯ -->
+<div class="section alphabet-section" id="reading-words">
+  <h2>Слова для отработки чтения</h2>
+
+  <div class="phrase">
+    <div class="korean">
+
+      <div class="word-item" onclick="speak('오이')">오이 – огурец</div>
+      <div class="word-item" onclick="speak('여우')">여우 – лиса</div>
+      <div class="word-item" onclick="speak('우유')">우유 – молоко</div>
+      <div class="word-item" onclick="speak('용')">용 – дракон</div>
+      <div class="word-item" onclick="speak('영')">영 – ноль</div>
+      <div class="word-item" onclick="speak('영어')">영어 – английский язык</div>
+
+      <div class="word-item" onclick="speak('누나')">누나 – старшая сестра (для мальчика)</div>
+      <div class="word-item" onclick="speak('언니')">언니 – старшая сестра (для девочки)</div>
+      <div class="word-item" onclick="speak('어머니')">어머니 – мама</div>
+      <div class="word-item" onclick="speak('안녕')">안녕 – привет / пока</div>
+      <div class="word-item" onclick="speak('만남')">만남 – встреча</div>
+
+      <div class="word-item" onclick="speak('감')">감 – хурма</div>
+      <div class="word-item" onclick="speak('강')">강 – река</div>
+      <div class="word-item" onclick="speak('곰')">곰 – медведь</div>
+      <div class="word-item" onclick="speak('모기')">모기 – комар</div>
+      <div class="word-item" onclick="speak('가구')">가구 – мебель</div>
+      <div class="word-item" onclick="speak('고양이')">고양이 – кот / кошка</div>
+      <div class="word-item" onclick="speak('목')">목 – шея</div>
+      <div class="word-item" onclick="speak('악어')">악어 – крокодил</div>
+      <div class="word-item" onclick="speak('국악')">국악 – корейская национальная музыка</div>
+      <div class="word-item" onclick="speak('음악')">음악 – музыка</div>
+
+      <div class="word-item" onclick="speak('가다')">가다 – идти</div>
+      <div class="word-item" onclick="speak('오다')">오다 – приходить</div>
+      <div class="word-item" onclick="speak('단어')">단어 – слово</div>
+      <div class="word-item" onclick="speak('곧')">곧 – скоро</div>
+      <div class="word-item" onclick="speak('믿다')">믿다 – верить</div>
+      <div class="word-item" onclick="speak('믿어요')">믿어요 – верю</div>
+
+      <div class="word-item" onclick="speak('이름')">이름 – имя</div>
+      <div class="word-item" onclick="speak('여름')">여름 – лето</div>
+      <div class="word-item" onclick="speak('머리')">머리 – голова</div>
+      <div class="word-item" onclick="speak('다리')">다리 – нога</div>
+      <div class="word-item" onclick="speak('가을')">가을 – осень</div>
+      <div class="word-item" onclick="speak('겨울')">겨울 – зима</div>
+      <div class="word-item" onclick="speak('알아요')">알아요 – знаю</div>
+      <div class="word-item" onclick="speak('몰라요')">몰라요 – не знаю</div>
+      <div class="word-item" onclick="speak('보다')">보다 – смотреть</div>
+      <div class="word-item" onclick="speak('봄')">봄 – весна</div>
+      <div class="word-item" onclick="speak('부모님')">부모님 – родители</div>
+      <div class="word-item" onclick="speak('가방')">가방 – сумка / рюкзак</div>
+      <div class="word-item" onclick="speak('입')">입 – рот</div>
+      <div class="word-item" onclick="speak('방법')">방법 – способ</div>
+
+      <div class="word-item" onclick="speak('사람')">사람 – человек</div>
+      <div class="word-item" onclick="speak('수박')">수박 – арбуз</div>
+      <div class="word-item" onclick="speak('버스')">버스 – автобус</div>
+      <div class="word-item" onclick="speak('마시다')">마시다 – пить</div>
+      <div class="word-item" onclick="speak('도시')">도시 – город</div>
+      <div class="word-item" onclick="speak('셔요')">셔요 – кислый</div>
+      <div class="word-item" onclick="speak('것')">것 – предмет</div>
+      <div class="word-item" onclick="speak('웃다')">웃다 – смеяться / улыбаться</div>
+      <div class="word-item" onclick="speak('웃음')">웃음 – смех</div>
+      <div class="word-item" onclick="speak('집')">집 – дом</div>
+      <div class="word-item" onclick="speak('아버지')">아버지 – отец</div>
+      <div class="word-item" onclick="speak('가족')">가족 – семья</div>
+      <div class="word-item" onclick="speak('자전거')">자전거 – велосипед</div>
+      <div class="word-item" onclick="speak('낮')">낮 – день</div>
+      <div class="word-item" onclick="speak('늦다')">늦다 – опаздывать</div>
+      <div class="word-item" onclick="speak('늦어요')">늦어요 – опаздываю</div>
+
+      <div class="word-item" onclick="speak('친구')">친구 – друг</div>
+      <div class="word-item" onclick="speak('자동차')">자동차 – машина</div>
+      <div class="word-item" onclick="speak('치마')">치마 – юбка</div>
+      <div class="word-item" onclick="speak('치즈')">치즈 – сыр</div>
+      <div class="word-item" onclick="speak('빛')">빛 – свет, луч</div>
+      <div class="word-item" onclick="speak('빛이 나요')">빛이 나요 – светится</div>
+      <div class="word-item" onclick="speak('크다')">크다 – большой</div>
+      <div class="word-item" onclick="speak('코')">코 – нос</div>
+      <div class="word-item" onclick="speak('카드')">카드 – карта</div>
+      <div class="word-item" onclick="speak('스키')">스키 – лыжи</div>
+      <div class="word-item" onclick="speak('마스크')">마스크 – маска</div>
+
+      <div class="word-item" onclick="speak('토마토')">토마토 – помидор</div>
+      <div class="word-item" onclick="speak('필통')">필통 – пенал</div>
+      <div class="word-item" onclick="speak('마트')">마트 – магазин</div>
+      <div class="word-item" onclick="speak('같다')">같다 – схожий</div>
+      <div class="word-item" onclick="speak('같아요')">같아요 – схожий</div>
+
+      <div class="word-item" onclick="speak('포도')">포도 – виноград</div>
+      <div class="word-item" onclick="speak('폭포')">폭포 – водопад</div>
+      <div class="word-item" onclick="speak('파도')">파도 – волна</div>
+      <div class="word-item" onclick="speak('편지')">편지 – письмо</div>
+      <div class="word-item" onclick="speak('앞')">앞 – перед</div>
+      <div class="word-item" onclick="speak('앞으로')">앞으로 – вперед</div>
+      <div class="word-item" onclick="speak('무릎')">무릎 – колено</div>
+      <div class="word-item" onclick="speak('높다')">높다 – высокий</div>
+      <div class="word-item" onclick="speak('높아요')">높아요 – высокий</div>
+
+      <div class="word-item" onclick="speak('한국')">한국 – Корея</div>
+      <div class="word-item" onclick="speak('한국어')">한국어 – корейский язык</div>
+      <div class="word-item" onclick="speak('학교')">학교 – школа</div>
+      <div class="word-item" onclick="speak('방학')">방학 – каникулы</div>
+      <div class="word-item" onclick="speak('할머니')">할머니 – бабушка</div>
+      <div class="word-item" onclick="speak('할아버지')">할아버지 – дедушка</div>
+      <div class="word-item" onclick="speak('좋다')">좋다 – хороший</div>
+      <div class="word-item" onclick="speak('좋아요')">좋아요 – хороший</div>
+      <div class="word-item" onclick="speak('좋아하다')">좋아하다 – нравится</div>
+
+    </div>
+  </div>
+</div>
+<!-- раздел: Семья -->
+<div class="category-section" id="family">
+  <h2>Семья</h2>
+
+  <div class="phrase">
+    <div>
+      <div class="korean">아빠</div>
+      <div class="russian">папа (сокращённый вариант)</div>
+    </div>
+    <button class="btn" onclick="speak('아빠')">▶</button>
+  </div>
+
+  <div class="phrase">
+    <div>
+      <div class="korean">아버지</div>
+      <div class="russian">папа</div>
+    </div>
+    <button class="btn" onclick="speak('아버지')">▶</button>
+  </div>
+
+  <div class="phrase">
+    <div>
+      <div class="korean">엄마</div>
+      <div class="russian">мама (сокращённый вариант)</div>
+    </div>
+    <button class="btn" onclick="speak('엄마')">▶</button>
+  </div>
+
+  <div class="phrase">
+    <div>
+      <div class="korean">어머니</div>
+      <div class="russian">мама</div>
+    </div>
+    <button class="btn" onclick="speak('어머니')">▶</button>
+  </div>
+
+  <div class="phrase">
+    <div>
+      <div class="korean">할머니</div>
+      <div class="russian">бабушка</div>
+    </div>
+    <button class="btn" onclick="speak('할머니')">▶</button>
+  </div>
+
+  <div class="phrase">
+    <div>
+      <div class="korean">할아버지</div>
+      <div class="russian">дедушка</div>
+    </div>
+    <button class="btn" onclick="speak('할아버지')">▶</button>
+  </div>
+
+  <div class="phrase">
+    <div>
+      <div class="korean">형</div>
+      <div class="russian">старший брат (для мальчика)</div>
+    </div>
+    <button class="btn" onclick="speak('형')">▶</button>
+  </div>
+
+  <div class="phrase">
+    <div>
+      <div class="korean">누나</div>
+      <div class="russian">старшая сестра (для мальчика)</div>
+    </div>
+    <button class="btn" onclick="speak('누나')">▶</button>
+  </div>
+
+  <div class="phrase">
+    <div>
+      <div class="korean">오빠</div>
+      <div class="russian">старший брат (для девочки)</div>
+    </div>
+    <button class="btn" onclick="speak('오빠')">▶</button>
+  </div>
+
+  <div class="phrase">
+    <div>
+      <div class="korean">언니</div>
+      <div class="russian">старшая сестра (для девочки)</div>
+    </div>
+    <button class="btn" onclick="speak('언니')">▶</button>
+  </div>
+
+  <div class="phrase">
+    <div>
+      <div class="korean">남동생</div>
+      <div class="russian">младший брат</div>
+    </div>
+    <button class="btn" onclick="speak('남동생')">▶</button>
+  </div>
+
+  <div class="phrase">
+    <div>
+      <div class="korean">여동생</div>
+      <div class="russian">младшая сестра</div>
+    </div>
+    <button class="btn" onclick="speak('여동생')">▶</button>
+  </div>
+
+  <div class="phrase">
+    <div>
+      <div class="korean">나</div>
+      <div class="russian">я</div>
+    </div>
+    <button class="btn" onclick="speak('나')">▶</button>
+  </div>
+
+  <div class="phrase">
+    <div>
+      <div class="korean">우리</div>
+      <div class="russian">мы</div>
+    </div>
+    <button class="btn" onclick="speak('우리')">▶</button>
+  </div>
+
+  <div class="phrase">
+    <div>
+      <div class="korean">가족</div>
+      <div class="russian">семья</div>
+    </div>
+    <button class="btn" onclick="speak('가족')">▶</button>
+  </div>
+<!-- кратко про 은 / 는 -->
+<div class="section alphabet-section" id="endings">
+  <h2>Окончания 은 / 는</h2> 
+
+  <p>
+    Выделительные частицы (окончания) <b>은</b> и <b>는</b> в предложении присоединяются к подлежащему
+  </p>
+
+  <p>
+    🔹 <b>은</b> присоединяется к слову, которое <b>заканчивается на согласную </b>(형 + 은 = 형은).
+  </p>
+
+
+  <p>
+    🔹 <b>는</b> присоединяется к слову, которое <b>заканчивается на гласную </b>(누나 + 는 = 누나는).
+  </p>
+
+ <p>
+    🔹 <b>입니다</b> окончание вежливо-официальной формы, имеет значение "быть, являться кем-либо/чем-либо".
+  </p>
+  <div class="phrase">
+    <div>
+      <div class="korean">형<span style="color:#a67c52;">은</span> 민수입니다.</div>
+      <div class="russian">Старшего брата зовут Минсу.</div>
+    </div>
+    <button class="btn" onclick="speak('형은 민수입니다')">▶</button>
+  </div>
+
+  <div class="phrase">
+    <div>
+      <div class="korean">누나<span style="color:#a67c52;">는</span> 유나입니다.</div>
+      <div class="russian">Старшую сестру зовут Юна.</div>
+    </div>
+    <button class="btn" onclick="speak('누나는 유나입니다')">▶</button>
+  </div>
+
+  <p style="margin-top:15px; color:#6b4226;">
+    👉 Запомни: согласная → <b>은</b>, гласная → <b>는</b>
+  </p>
+</div>
+<!-- текст: Моя семья (сплошной текст) -->
+<div class="section alphabet-section" id="my-family-text">
+  <h2>우리 가족</h2>
+
+  <div class="phrase">
+    <div class="korean" style="line-height:1.8;">
+      안녕하세요? 저는 민준입니다. 저는 학생입니다. 어머니는 아름입니다. 어머니는 한국어 선생님입니다. 아버지는 은우입니다. 아버지는 영어 선생님입니다. 누나는 영미입니다. 형은 민혁입니다. 여동생은 미연입니다. 남동생은 민수입니다. 만나서 반가워요.
+    </div>
+  </div>
+</div>
+</div>
+<!-- ШКОЛЬНЫЕ ПРИНАДЛЕЖНОСТИ -->
+  <h2> Школьные принадлежности</h2>
+<div class="section alphabet-section" id="school-items">
+
+<div class="phrase" onclick="speak('학용품')">
+    <div>
+      <div class="korean">학용품</div>
+      <div class="russian">школьные принадлежности</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('가방')">
+    <div>
+      <div class="korean">가방</div>
+      <div class="russian">рюкзак, сумка</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('필통')">
+    <div>
+      <div class="korean">필통</div>
+      <div class="russian">пенал</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('볼펜')">
+    <div>
+      <div class="korean">볼펜</div>
+      <div class="russian">шариковая ручка</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('연필')">
+    <div>
+      <div class="korean">연필</div>
+      <div class="russian">карандаш</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('자')">
+    <div>
+      <div class="korean">자</div>
+      <div class="russian">линейка</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('지우개')">
+    <div>
+      <div class="korean">지우개</div>
+      <div class="russian">ластик</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('책')">
+    <div>
+      <div class="korean">책</div>
+      <div class="russian">книга</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('공책')">
+    <div>
+      <div class="korean">공책</div>
+      <div class="russian">тетрадь</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('칠판')">
+    <div>
+      <div class="korean">칠판</div>
+      <div class="russian">классная доска</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('책상')">
+    <div>
+      <div class="korean">책상</div>
+      <div class="russian">парта</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('시계')">
+    <div>
+      <div class="korean">시계</div>
+      <div class="russian">часы</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+<div class="phrase" onclick="speak('이것은 뭐예요?')">
+    <div>
+      <div class="korean">이것은 뭐예요?</div>
+      <div class="russian">Что это?</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('이것은 연필입니다')">
+    <div>
+      <div class="korean">이것은 연필입니다</div>
+      <div class="russian">Это карандаш</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('이것은 뭐예요?')">
+    <div>
+      <div class="korean">이것은 뭐예요?</div>
+      <div class="russian">Что это?</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('이것은 볼펜입니다')">
+    <div>
+      <div class="korean">이것은 볼펜입니다</div>
+      <div class="russian">Это шариковая ручка</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+</div>
+<!-- ДНИ НЕДЕЛИ -->
+<div class="section alphabet-section" id="weekdays">
+  <h2>Дни недели</h2>
+
+<div class="phrase" onclick="speak('요일')">
+    <div>
+      <div class="korean">요일</div>
+      <div class="russian">день недели</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('월요일')">
+    <div>
+      <div class="korean">월요일</div>
+      <div class="russian">понедельник</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('화요일')">
+    <div>
+      <div class="korean">화요일</div>
+      <div class="russian">вторник</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('수요일')">
+    <div>
+      <div class="korean">수요일</div>
+      <div class="russian">среда</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('목요일')">
+    <div>
+      <div class="korean">목요일</div>
+      <div class="russian">четверг</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('금요일')">
+    <div>
+      <div class="korean">금요일</div>
+      <div class="russian">пятница</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('토요일')">
+    <div>
+      <div class="korean">토요일</div>
+      <div class="russian">суббота</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('일요일')">
+    <div>
+      <div class="korean">일요일</div>
+      <div class="russian">воскресенье</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('오늘은 무슨 요일입니까?')">
+    <div>
+      <div class="korean">오늘은 무슨 요일입니까?</div>
+      <div class="russian">Какой сегодня день недели?</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('오늘은 월요일입니다')">
+    <div>
+      <div class="korean">오늘은 월요일입니다</div>
+      <div class="russian">Сегодня понедельник</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+</div>
+<!-- КОРЕЙСКИЕ ЧИСЛИТЕЛЬНЫЕ -->
+<div class="section alphabet-section" id="numbers-korean">
+  <h2>Корейские числительные</h2>
+
+  <h3 style="color:#6b4226; margin-top:20px;">От 1 до 10</h3>
+
+  <div class="phrase" onclick="speak('일')">
+    <div><div class="korean">일</div><div class="russian">1</div></div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('이')">
+    <div><div class="korean">이</div><div class="russian">2</div></div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('삼')">
+    <div><div class="korean">삼</div><div class="russian">3</div></div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('사')">
+    <div><div class="korean">사</div><div class="russian">4</div></div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('오')">
+    <div><div class="korean">오</div><div class="russian">5</div></div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('육')">
+    <div><div class="korean">육</div><div class="russian">6</div></div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('칠')">
+    <div><div class="korean">칠</div><div class="russian">7</div></div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('팔')">
+    <div><div class="korean">팔</div><div class="russian">8</div></div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('구')">
+    <div><div class="korean">구</div><div class="russian">9</div></div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('십')">
+    <div><div class="korean">십</div><div class="russian">10</div></div>
+    <button class="btn">▶</button>
+  </div>
+    <h3 style="color:#6b4226; margin-top:20px;">От 11 до 19</h3>
+
+  <div class="phrase" onclick="speak('십일')">
+    <div><div class="korean">십일</div><div class="russian">11</div></div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('십이')">
+    <div><div class="korean">십이</div><div class="russian">12</div></div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('십삼')">
+    <div><div class="korean">십삼</div><div class="russian">13</div></div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('십사')">
+    <div><div class="korean">십사</div><div class="russian">14</div></div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('십오')">
+    <div><div class="korean">십오</div><div class="russian">15</div></div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('십육')">
+    <div><div class="korean">십육</div><div class="russian">16</div></div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('십칠')">
+    <div><div class="korean">십칠</div><div class="russian">17</div></div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('십팔')">
+    <div><div class="korean">십팔</div><div class="russian">18</div></div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('십구')">
+    <div><div class="korean">십구</div><div class="russian">19</div></div>
+    <button class="btn">▶</button>
+  </div>
+
+  <h3 style="color:#6b4226; margin-top:30px;">Десятки</h3>
+
+  <div class="phrase" onclick="speak('이십')">
+    <div><div class="korean">이십</div><div class="russian">20</div></div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('삼십')">
+    <div><div class="korean">삼십</div><div class="russian">30</div></div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('사십')">
+    <div><div class="korean">사십</div><div class="russian">40</div></div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('오십')">
+    <div><div class="korean">오십</div><div class="russian">50</div></div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('육십')">
+    <div><div class="korean">육십</div><div class="russian">60</div></div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('칠십')">
+    <div><div class="korean">칠십</div><div class="russian">70</div></div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('팔십')">
+    <div><div class="korean">팔십</div><div class="russian">80</div></div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('구십')">
+    <div><div class="korean">구십</div><div class="russian">90</div></div>
+    <button class="btn">▶</button>
+  </div>
+
+</div>
+<!-- ===== Месяцы ===== -->
+<div class="section alphabet-section" id="months">
+  <h2>Месяцы</h2>
+
+  <div class="phrase" onclick="speak('일월')">
+    <div>
+      <div class="korean">1월</div>
+      <div class="russian">январь</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('이월')">
+    <div>
+      <div class="korean">2월</div>
+      <div class="russian">февраль</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('삼월')">
+    <div>
+      <div class="korean">3월</div>
+      <div class="russian">март</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('사월')">
+    <div>
+      <div class="korean">4월</div>
+      <div class="russian">апрель</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('오월')">
+    <div>
+      <div class="korean">5월</div>
+      <div class="russian">май</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('유월')">
+    <div>
+      <div class="korean">6월</div>
+      <div class="russian">июнь</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('칠월')">
+    <div>
+      <div class="korean">7월</div>
+      <div class="russian">июль</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('팔월')">
+    <div>
+      <div class="korean">8월</div>
+      <div class="russian">август</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('구월')">
+    <div>
+      <div class="korean">9월</div>
+      <div class="russian">сентябрь</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('시월')">
+    <div>
+      <div class="korean">10월</div>
+      <div class="russian">октябрь</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('십일월')">
+    <div>
+      <div class="korean">11월</div>
+      <div class="russian">ноябрь</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('십이월')">
+    <div>
+      <div class="korean">12월</div>
+      <div class="russian">декабрь</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+</div>
+<!-- ===== Числа месяца (таблица 1–31) ===== -->
+<div class="section alphabet-section" id="month-days">
+  <h2>Числа месяца</h2>
+
+  <table class="days-table">
+    <tr>
+      <td><div class="phrase" onclick="speak('일일')"><div class="korean">1일</div><div class="russian">(일일)</div><button class="btn">▶</button></div></td>
+      <td><div class="phrase" onclick="speak('이일')"><div class="korean">2일</div><div class="russian">(이일)</div><button class="btn">▶</button></div></td>
+      <td><div class="phrase" onclick="speak('삼일')"><div class="korean">3일</div><div class="russian">(삼일)</div><button class="btn">▶</button></div></td>
+      <td><div class="phrase" onclick="speak('사일')"><div class="korean">4일</div><div class="russian">(사일)</div><button class="btn">▶</button></div></td>
+      <td><div class="phrase" onclick="speak('오일')"><div class="korean">5일</div><div class="russian">(오일)</div><button class="btn">▶</button></div></td>
+    </tr>
+    <tr>
+      <td><div class="phrase" onclick="speak('육일')"><div class="korean">6일</div><div class="russian">(육일)</div><button class="btn">▶</button></div></td>
+      <td><div class="phrase" onclick="speak('칠일')"><div class="korean">7일</div><div class="russian">(칠일)</div><button class="btn">▶</button></div></td>
+      <td><div class="phrase" onclick="speak('팔일')"><div class="korean">8일</div><div class="russian">(팔일)</div><button class="btn">▶</button></div></td>
+      <td><div class="phrase" onclick="speak('구일')"><div class="korean">9일</div><div class="russian">(구일)</div><button class="btn">▶</button></div></td>
+      <td><div class="phrase" onclick="speak('십일')"><div class="korean">10일</div><div class="russian">(십일)</div><button class="btn">▶</button></div></td>
+    </tr>
+    <tr>
+      <td><div class="phrase" onclick="speak('십일일')"><div class="korean">11일</div><div class="russian">(십일일)</div><button class="btn">▶</button></div></td>
+      <td><div class="phrase" onclick="speak('십이일')"><div class="korean">12일</div><div class="russian">(십이일)</div><button class="btn">▶</button></div></td>
+      <td><div class="phrase" onclick="speak('십삼일')"><div class="korean">13일</div><div class="russian">(십삼일)</div><button class="btn">▶</button></div></td>
+      <td><div class="phrase" onclick="speak('십사일')"><div class="korean">14일</div><div class="russian">(십사일)</div><button class="btn">▶</button></div></td>
+      <td><div class="phrase" onclick="speak('십오일')"><div class="korean">15일</div><div class="russian">(십오일)</div><button class="btn">▶</button></div></td>
+    </tr>
+    <tr>
+      <td><div class="phrase" onclick="speak('십육일')"><div class="korean">16일</div><div class="russian">(십육일)</div><button class="btn">▶</button></div></td>
+      <td><div class="phrase" onclick="speak('십칠일')"><div class="korean">17일</div><div class="russian">(십칠일)</div><button class="btn">▶</button></div></td>
+      <td><div class="phrase" onclick="speak('십팔일')"><div class="korean">18일</div><div class="russian">(십팔일)</div><button class="btn">▶</button></div></td>
+      <td><div class="phrase" onclick="speak('십구일')"><div class="korean">19일</div><div class="russian">(십구일)</div><button class="btn">▶</button></div></td>
+      <td><div class="phrase" onclick="speak('이십일')"><div class="korean">20일</div><div class="russian">(이십일)</div><button class="btn">▶</button></div></td>
+    </tr>
+    <tr>
+      <td><div class="phrase" onclick="speak('이십일일')"><div class="korean">21일</div><div class="russian">(이십일일)</div><button class="btn">▶</button></div></td>
+      <td><div class="phrase" onclick="speak('이십이일')"><div class="korean">22일</div><div class="russian">(이십이일)</div><button class="btn">▶</button></div></td>
+      <td><div class="phrase" onclick="speak('이십삼일')"><div class="korean">23일</div><div class="russian">(이십삼일)</div><button class="btn">▶</button></div></td>
+      <td><div class="phrase" onclick="speak('이십사일')"><div class="korean">24일</div><div class="russian">(이십사일)</div><button class="btn">▶</button></div></td>
+      <td><div class="phrase" onclick="speak('이십오일')"><div class="korean">25일</div><div class="russian">(이십오일)</div><button class="btn">▶</button></div></td>
+    </tr>
+    <tr>
+      <td><div class="phrase" onclick="speak('이십육일')"><div class="korean">26일</div><div class="russian">(이십육일)</div><button class="btn">▶</button></div></td>
+      <td><div class="phrase" onclick="speak('이십칠일')"><div class="korean">27일</div><div class="russian">(이십칠일)</div><button class="btn">▶</button></div></td>
+      <td><div class="phrase" onclick="speak('이십팔일')"><div class="korean">28일</div><div class="russian">(이십팔일)</div><button class="btn">▶</button></div></td>
+      <td><div class="phrase" onclick="speak('이십구일')"><div class="korean">29일</div><div class="russian">(이십구일)</div><button class="btn">▶</button></div></td>
+      <td><div class="phrase" onclick="speak('삼십일')"><div class="korean">30일</div><div class="russian">(삼십일)</div><button class="btn">▶</button></div></td>
+    </tr>
+    <tr>
+      <td><div class="phrase" onclick="speak('삼십일일')"><div class="korean">31일</div><div class="russian">(삼십일일)</div><button class="btn">▶</button></div></td>
+      <td colspan="6"></td>
+    </tr>
+  </table>
+
+    <div class="phrase" onclick="speak('1월 7일')">
+    <div>
+      <div class="korean">1월 7일</div>
+      <div class="russian">Седьмое января</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('9월 1일')">
+    <div>
+      <div class="korean">9월 1일</div>
+      <div class="russian">Первое сентября</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+<div class="phrase" onclick="speak('3월 8일')">
+    <div>
+      <div class="korean">3월 8일</div>
+      <div class="russian">Восьмое марта</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('10월 9일')">
+    <div>
+      <div class="korean">10월 9일</div>
+      <div class="russian">Девятое октября</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('오늘은 며칠입니까?')">
+    <div>
+      <div class="korean">오늘은 며칠입니까?</div>
+      <div class="russian">Какое сегодня число?</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('오늘은 5월 9일입니다')">
+    <div>
+      <div class="korean">오늘은 5월 9일입니다</div>
+      <div class="russian">Сегодня девятое мая</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('오늘은 며칠입니까?')">
+    <div>
+      <div class="korean">오늘은 며칠입니까?</div>
+      <div class="russian">Какое сегодня число?</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="phrase" onclick="speak('오늘은 6월 12일입니다')">
+    <div>
+      <div class="korean">오늘은 6월 12일입니다</div>
+      <div class="russian">Сегодня двенадцатое июня</div>
+    </div>
+    <button class="btn">▶</button>
+  </div>
+</div>
+  <!-- список твоих фраз, отсылается по команде id -->
+
+
+  <!-- это раздел практики  -->
+  <div id="practice" class="section practice">
+    <h3> Практика: переведите корейское предложение на русский</h3>
+    <label>Выберите категорию:
+      <select id="practiceCategory"></select>
+    </label>
+
+    <div id="korPhrase">
+      <span id="korText">Здесь будет корейское предложение</span>
+      <button class="btn" onclick="speak(korText.textContent)">▶</button>
+    </div>
+
+    <div style="margin-top:20px; display:flex; align-items:center; gap:12px;">
+      <input type="text" id="userAnswer" placeholder="Введите ваш перевод...">
+      <button class="btn" onclick="checkAnswer()" style="padding: 12px 20px;">Проверить</button>
+      <button class="btn" onclick="nextPhrase()" style="padding: 12px 20px;">Следующая фраза</button>
+    </div>
+
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+      </div>
+      <div style="text-align:center; margin-top:5px; color:#a67c52; font-size:14px;" id="progressText">Прогресс: 0%</div>
+    </div>
+
+    <div class="feedback" id="testFeedback"></div>
+  </div>
+
+  <!-- кнопочка наверх -->
+  <button id="scrollToTop" title="Наверх">↑</button>
+</div>
+
+<script>
+
+const PHRASES = {
+
+  "Семья": [
+    {kor:"남동생", rus:"младший брат"},
+    {kor:"아버지", rus:"папа"},
+    {kor:"여동생", rus:"младшая сестра"},
+    {kor:"어머니", rus:"мама"},
+    {kor:"할머니", rus:"бабушка"},
+    {kor:"할아버지", rus:"дедушка"},
+    {kor:"가족", rus:"семья"}
+  ],
+
+  "Школа": [
+    {kor:"가방", rus:"рюкзак"},
+    {kor:"필통", rus:"пенал"},
+    {kor:"연필", rus:"карандаш"},
+    {kor:"볼펜", rus:"ручка"},
+    {kor:"자", rus:"линейка"},
+    {kor:"지우개", rus:"ластик"},
+    {kor:"책", rus:"книга"}
+  ],
+
+  "Дни недели": [
+    {kor:"월요일", rus:"понедельник"},
+    {kor:"화요일", rus:"вторник"},
+    {kor:"수요일", rus:"среда"},
+    {kor:"목요일", rus:"четверг"},
+    {kor:"금요일", rus:"пятница"},
+    {kor:"토요일", rus:"суббота"},
+    {kor:"일요일", rus:"воскресенье"}
+  ],
+
+  "Числа": [
+    {kor:"일", rus:"1"},
+    {kor:"이", rus:"2"},
+    {kor:"삼", rus:"3"},
+    {kor:"사", rus:"4"},
+    {kor:"오", rus:"5"},
+    {kor:"육", rus:"6"},
+    {kor:"칠", rus:"7"}
+  ],
+
+  "Месяцы": [
+    {kor:"1월", rus:"январь"},
+    {kor:"2월", rus:"февраль"},
+    {kor:"3월", rus:"март"},
+    {kor:"4월", rus:"апрель"},
+    {kor:"5월", rus:"май"},
+    {kor:"6월", rus:"июнь"},
+    {kor:"7월", rus:"июль"}
+  ]
+
+};
+
+const KOREAN_ALPHABET = {
+  consonants: [
+    {letter: "ㄱ", sound: "к/г", name: "기역"},
+    {letter: "ㄴ", sound: "н", name: "니은"},
+    {letter: "ㄷ", sound: "т/д", name: "디귿"},
+    {letter: "ㄹ", sound: "р/л", name: "리을"},
+    {letter: "ㅁ", sound: "м", name: "미음"},
+    {letter: "ㅂ", sound: "п/б", name: "비읍"},
+    {letter: "ㅅ", sound: "с", name: "시옷"},
+    {letter: "ㅇ", sound: "-/нг", name: "이응"},
+    {letter: "ㅈ", sound: "ч/дж", name: "지읒"},
+    {letter: "ㅊ", sound: "чх", name: "치읓"},
+    {letter: "ㅋ", sound: "кх", name: "키읔"},
+    {letter: "ㅌ", sound: "тх", name: "티읕"},
+    {letter: "ㅍ", sound: "пх", name: "피읖"},
+    {letter: "ㅎ", sound: "х", name: "히읗"}
+  ],
+  doubleConsonants: [
+    {letter: "ㄲ", sound: "кк", name: "쌍기역"},
+    {letter: "ㄸ", sound: "тт", name: "쌍디귿"},
+    {letter: "ㅃ", sound: "пп", name: "쌍비읍"},
+    {letter: "ㅆ", sound: "сс", name: "쌍시옷"},
+    {letter: "ㅉ", sound: "чч", name: "쌍지읒"}
+  ],
+  vowels: [
+    {letter: "ㅏ", sound: "а", name: "아"},
+    {letter: "ㅑ", sound: "я", name: "야"},
+    {letter: "ㅓ", sound: "о", name: "어"},
+    {letter: "ㅕ", sound: "ё", name: "여"},
+    {letter: "ㅗ", sound: "о", name: "오"},
+    {letter: "ㅛ", sound: "ё", name: "요"},
+    {letter: "ㅜ", sound: "у", name: "우"},
+    {letter: "ㅠ", sound: "ю", name: "유"},
+    {letter: "ㅡ", sound: "ы", name: "으"},
+    {letter: "ㅣ", sound: "и", name: "이"}
+  ],
+  compoundVowels: [
+    {letter: "ㅐ", sound: "э", name: "애"},
+    {letter: "ㅒ", sound: "йе", name: "얘"},
+    {letter: "ㅔ", sound: "е", name: "에"},
+    {letter: "ㅖ", sound: "йе", name: "예"},
+    {letter: "ㅘ", sound: "уа", name: "와"},
+    {letter: "ㅙ", sound: "уэ", name: "왜"},
+    {letter: "ㅚ", sound: "уе", name: "외"},
+    {letter: "ㅝ", sound: "уо", name: "워"},
+    {letter: "ㅞ", sound: "уе", name: "웨"},
+    {letter: "ㅟ", sound: "уи", name: "위"},
+    {letter: "ㅢ", sound: "ый", name: "의"}
+  ]
+};
+
+const LETTER_SOUNDS = {
+  "ㄱ": "기역", "ㄴ": "니은", "ㄷ": "디귿", "ㄹ": "리을", 
+  "ㅁ": "미음", "ㅂ": "비읍", "ㅅ": "시옷", "ㅇ": "이응", 
+  "ㅈ": "지읒", "ㅊ": "치읓", "ㅋ": "키읔", "ㅌ": "티읕", 
+  "ㅍ": "피읖", "ㅎ": "히읗",
+  "ㄲ": "쌍기역", "ㄸ": "쌍디귿", "ㅃ": "쌍비읍", 
+  "ㅆ": "쌍시옷", "ㅉ": "쌍지읒",
+  "ㅏ": "아", "ㅑ": "야", "ㅓ": "어", "ㅕ": "여", 
+  "ㅗ": "오", "ㅛ": "요", "ㅜ": "우", "ㅠ": "유", 
+  "ㅡ": "으", "ㅣ": "이",
+  "ㅐ": "애", "ㅒ": "얘", "ㅔ": "에", "ㅖ": "예", 
+  "ㅘ": "와", "ㅙ": "왜", "ㅚ": "외", "ㅝ": "워", 
+  "ㅞ": "웨", "ㅟ": "위", "ㅢ": "의"
+};
+
+const contentDiv = document.getElementById('content');
+const practiceSelect = document.getElementById('practiceCategory');
+const korText = document.getElementById('korText');
+const userAnswer = document.getElementById('userAnswer');
+const testFeedback = document.getElementById('testFeedback');
+const progress = document.getElementById('progress');
+const progressText = document.getElementById('progressText');
+const consonantsGrid = document.getElementById('consonantsGrid');
+const doubleConsonantsGrid = document.getElementById('doubleConsonantsGrid');
+const vowelsGrid = document.getElementById('vowelsGrid');
+const compoundVowelsGrid = document.getElementById('compoundVowelsGrid');
+const scrollToTopBtn = document.getElementById('scrollToTop');
+
+let currentCategory = '';
+let currentPhrases = [];
+let currentIndex = 0;
+let totalWords = 7;           // общее количество слов
+let currentProgress = 0;      // текущий прогресс в %
+let step = 100 / totalWords;  // прогресс за одно правильное слово
+
+
+function initAlphabet() {
+  KOREAN_ALPHABET.consonants.forEach(item => {
+    const card = createLetterCard(item);
+    consonantsGrid.appendChild(card);
+  });
+  
+  KOREAN_ALPHABET.doubleConsonants.forEach(item => {
+    const card = createLetterCard(item);
+    doubleConsonantsGrid.appendChild(card);
+  });
+  
+  KOREAN_ALPHABET.vowels.forEach(item => {
+    const card = createLetterCard(item);
+    vowelsGrid.appendChild(card);
+  });
+  
+  KOREAN_ALPHABET.compoundVowels.forEach(item => {
+    const card = createLetterCard(item);
+    compoundVowelsGrid.appendChild(card);
+  });
+}
+
+function createLetterCard(item) {
+  const card = document.createElement('div');
+  card.className = 'letter-card';
+  card.innerHTML = `
+    <div class="korean-letter">${item.letter}</div>
+    <div class="letter-transcription">${item.sound}</div>
+    <div class="letter-name">${item.name}</div>
+  `;
+  card.addEventListener('click', () => {
+    const koreanName = LETTER_SOUNDS[item.letter];
+    if (koreanName) {
+      speak(koreanName);
+    }
+  });
+  return card;
+}
+
+function speak(text){
+  if('speechSynthesis' in window){
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'ko-KR';
+    utterance.rate = 0.8; 
+    
+    speechSynthesis.getVoices();
+    setTimeout(() => {
+      const voices = speechSynthesis.getVoices();
+      const koVoice = voices.find(v => v.lang.toLowerCase().startsWith('ko'));
+      if (koVoice) utterance.voice = koVoice;
+      
+      speechSynthesis.cancel();
+      speechSynthesis.speak(utterance);
+    }, 100);
+  } else {
+    alert(`Произношение: ${text}`);
+  }
+}
+
+Object.keys(PHRASES).forEach(cat=>{
+  const option = document.createElement('option'); 
+  option.value = cat; 
+  option.textContent = cat;
+  practiceSelect.appendChild(option);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  initAlphabet();
+  
+  if (practiceSelect.options.length > 0) {
+    practiceSelect.selectedIndex = 0;
+    practiceSelect.dispatchEvent(new Event('change'));
+  }
+});
+
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    const targetId = this.getAttribute('href').substring(1);
+    const targetElement = document.getElementById(targetId);
+    
+    if (targetElement) {
+      window.scrollTo({
+        top: targetElement.offsetTop - 80,
+        behavior: 'smooth'
+      });
+    }
+  });
+});
+
+practiceSelect.addEventListener('change', ()=> {
+  currentCategory = practiceSelect.value;
+  currentPhrases = PHRASES[currentCategory];
+  
+  currentIndex = 0;
+  correctAnswers = 0;                 // обнуляем правильные ответы
+  step = 100 / currentPhrases.length; // пересчитываем шаг прогресса
+  progress.style.width = '0%';
+  progressText.textContent = 'Прогресс: 0%';
+  testFeedback.textContent = '';
+  userAnswer.value = '';
+  userAnswer.disabled = false;
+
+  showNextPhrase();
+});
+
+function showNextPhrase(){
+  if(currentIndex >= currentPhrases.length){
+    korText.textContent = "🎉 Тест завершён! Молодец!";
+    userAnswer.disabled = true;
+    return;
+  }
+korText.textContent = currentPhrases[currentIndex].kor;
+  userAnswer.value = '';
+  userAnswer.style.background = '#fff8f0';
+  userAnswer.style.color = '#333';
+
+if (userAnswer === correctAnswer) {
+    currentProgress += step;
+    if (currentProgress > 100) currentProgress = 100; // защита от переполнения
+    updateProgressBar(currentProgress); // обновление визуального прогресс-бара
+    currentIndex++; // переход к следующему слову
+} else {
+    // неверный ответ — прогресс не меняется
+}
+}
+
+function nextPhrase(){
+  currentIndex++;
+  showNextPhrase();
+}
+
+korText.addEventListener('click', ()=>speak(korText.textContent));
+
+function checkAnswer(){
+  if(currentIndex >= currentPhrases.length) return;
+
+  const phrase = currentPhrases[currentIndex];
+  const answer = userAnswer.value.trim();
+  const isCorrect = answer.toLowerCase() === phrase.rus.toLowerCase();
+
+  if(isCorrect){
+    userAnswer.style.background = '#d4f4dd';
+    userAnswer.style.color = '#155724';
+    testFeedback.textContent += `✅ Правильно! "${phrase.kor}" = "${phrase.rus}"\n\n`;
+
+    correctAnswers++;  // увеличиваем правильные ответы
+    let percent = Math.round(correctAnswers * step); // прогресс зависит только от правильных ответов
+    if(percent > 100) percent = 100;
+
+    progress.style.width = percent + '%';
+    progressText.textContent = `Прогресс: ${percent}%`;
+
+    currentIndex++; // идём к следующему слову
+    setTimeout(() => {
+        if(currentIndex < currentPhrases.length) showNextPhrase();
+    }, 500); // небольшой таймаут для показа цвета
+  } else {
+    userAnswer.style.background = '#f8d4d4';
+    userAnswer.style.color = '#721c24';
+    testFeedback.textContent += `❌ Не совсем. "${phrase.kor}" переводится как "${phrase.rus}"\nВаш ответ: "${answer}"\n\n`;
+  }
+
+  if(currentIndex >= currentPhrases.length){
+    testFeedback.textContent += "\n🎊 Отличная работа! Вы завершили этот раздел!";
+    userAnswer.disabled = true;
+  }
+}
+window.addEventListener('scroll', () => {
+  if (window.pageYOffset > 300) {
+    scrollToTopBtn.classList.add('show');
+  } else {
+    scrollToTopBtn.classList.remove('show');
+  }
+});
+
+scrollToTopBtn.addEventListener('click', () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
+
+function speakLetter(letter) {
+  const koreanName = LETTER_SOUNDS[letter];
+  if (koreanName) {
+    speak(koreanName);
+  }
+}
+</script>
+
+</body>
+</html>
